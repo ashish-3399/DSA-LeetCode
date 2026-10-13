@@ -1,9 +1,19 @@
 class Solution {
 public:
-    long long maxAlternatingSum(vector<int>& nums) {
-        int n = nums.size();
-        for(int& num : nums) num *= num;
+    long long maxAlternatingSum(vector<int>& nums1) {
+        int n = nums1.size(); long long ans = 0;
+        vector<long long> nums(n);
+        for(int i = 0; i < n; i++) {
+            nums[i] = nums1[i] * nums1[i] * 1LL;
+        }
         sort(nums.begin(), nums.end());
-        return -accumulate(nums.begin(), nums.begin() + n / 2, 0LL) + accumulate(nums.begin() + n / 2, nums.end(), 0LL);
+        
+        int l = 0, r = n - 1;
+        while(l <= r) {
+            if(l == r) {ans += nums[r]; break;}
+            ans += nums[r] - nums[l];
+            l++; r--;
+        }
+        return ans;
     }
 };
